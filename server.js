@@ -5,10 +5,11 @@ const app = express();
 app.use(express.json());
 
 // --- MongoDB connection ---
-mongoose.connect("mongodb+srv://mdshahriarsajib47309185_db_user:1234@cluster0.6jwnnp1.mongodb.net/loginAPI?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const uri = process.env.MONGO_URI;
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
 // --- User Schema ---
 const UserSchema = new mongoose.Schema({
