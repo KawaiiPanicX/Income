@@ -13,9 +13,13 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // --- User Schema ---
 const UserSchema = new mongoose.Schema({
-  name: String,
   email: { type: String, unique: true },
   password: String,
+  paypass: String,
+  nextw: Number,
+  processing: Number,
+  spint: Number,
+  topupt: Number
 });
 
 const User = mongoose.model("User", UserSchema);
