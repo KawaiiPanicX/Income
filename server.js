@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors()); // Enable CORS for all routes
+
 // --- MongoDB connection ---
 const uri = process.env.MONGO_URI;
 
