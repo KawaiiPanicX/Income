@@ -27,7 +27,7 @@ const User = mongoose.model("User", UserSchema);
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   const { paypass, email, password } = req.body;
-  const nextw=0,processing=0,spint=0,topupt=0;
+  const nextw=0,processing=0,spint=5,topupt=0;
   // Check if email already exists
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -53,28 +53,6 @@ app.post("/login", async (req, res) => {
   res.json({ success: true, message: "Login successful", user });
 });
 
-// Update name route
-app.post('/update-pro', async (req, res) => {
-  try {
-    const { email, password, pro } = req.body;
-
-    // Find user by email + password
-    const user = await User.findOne({ email, password });
-
-    if (!user) {
-      return res.json({ success: false, message: "Invalid email or password" });
-    }
-
-    // Update the name
-    user.processing = pro;
-    await user.save();
-
-    res.json({ success: true, message: "Name updated successfully", user });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Error updating name", error: err.message });
-  }
-});
-
 app.post('/update-pro-spin', async (req, res) => {
   try {
     const { email, password, pro,spin } = req.body;
@@ -85,6 +63,10 @@ app.post('/update-pro-spin', async (req, res) => {
     if (!user) {
       return res.json({ success: false, message: "Invalid email or password" });
     }
+    
+    if(user.processing<pro){
+      user.topupt=user.topupt+1;
+    }
 
     // Update the name
     user.processing = pro;
@@ -94,6 +76,33 @@ app.post('/update-pro-spin', async (req, res) => {
     res.json({ success: true, message: "Name updated successfully", user });
   } catch (err) {
     res.status(500).json({ success: false, message: "Error updating name", error: err.message });
+  }
+});
+
+
+// --- Delete Account Route ---
+app.post("/delete-account", async (req, res) => {
+  try {
+    const { email, paypass } = req.body;
+
+    // Check if both fields are provided
+    if (!email || !paypass) {
+      return res.status(400).json({ success: false, message: "Email and paypass are required" });
+    }
+
+    // Find user by email and paypass
+    const user = await User.findOne({ email, paypass });
+
+    if (!user) {
+      return res.json({ success: false, message: "Invalid email or paypass" });
+    }
+
+    // Delete user
+    await User.deleteOne({ _id: user._id });
+
+    res.json({ success: true, message: "Account deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error deleting account", error: err.message });
   }
 });
 
