@@ -58,7 +58,7 @@
       const email = document.getElementById('email').value;
       const paypass = document.getElementById('paypass').value;
       const result = document.getElementById('result');
-
+      result.textContent="Loading...";
       if (!email || !paypass) {
         result.textContent = "Please fill in both fields.";
         return;
