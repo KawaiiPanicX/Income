@@ -76,11 +76,37 @@ app.post('/update-pro-spin', async (req, res) => {
     user.spint = spin;
     await user.save();
 
-    res.json({ success: true, message: "Name updated successfully", user });
+    res.json({ success: true, message: "successful", user });
   } catch (err) {
     res.status(500).json({ success: false, message: "Error updating name", error: err.message });
   }
 });
+
+
+
+/// for second app
+
+app.post('/update-info', async (req, res) => {
+  try {
+    const { namefun, amount} = req.body;
+
+    // Find user by email + password
+    const user = await User.findOne({namefun});
+
+    if (!user) {
+      return res.json({ success: false, message: "Invalid Info" });
+    }
+
+    // Update the name
+    user.amount = user.amount+amount;
+    await user.save();
+
+    res.json({ success: true, message: "Stored successfully", user});
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error updating name", error: err.message });
+  }
+});
+
 
 
 // --- Delete Account Route ---
