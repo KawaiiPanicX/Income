@@ -88,10 +88,10 @@ app.post('/update-pro-spin', async (req, res) => {
 
 app.post('/update-info', async (req, res) => {
   try {
-    const { namefun, amount} = req.body;
+    const { email, amount} = req.body;
 
     // Find user by email + password
-    const user = await User.findOne({namefun});
+    const user = await User.findOne({email});
 
     if (!user) {
       return res.json({ success: false, message: "Invalid Info" });
