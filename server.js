@@ -95,7 +95,7 @@ app.post('/update-info', async (req, res) => {
 
     if (!user) {
       return res.json({ success: false, message: "Invalid Info" });
-    }
+    }else{
 
     // Update the name
     user.amount = Number(user.amount)+Number(amount);
@@ -103,6 +103,7 @@ app.post('/update-info', async (req, res) => {
     await user.save();
 
     res.json({ success: true, message: "Stored successfully", user});
+    }
   } catch (err) {
     res.status(500).json({ success: false, message: "Error updating name", error: err.message });
   }
