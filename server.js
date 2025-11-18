@@ -27,7 +27,17 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
-const SajibUser = mongoose.model("SajibUser", UserSchema, "sajibusers");
+
+const SajibUserSchema = new mongoose.Schema({
+  name: { type: String, unique: true },
+  password: String,
+  owner: String,
+  points: Number,
+  topuptimes: Number,
+  datas: String
+});
+
+const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   const { paypass, email, password } = req.body;
