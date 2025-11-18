@@ -98,8 +98,8 @@ app.post('/update-info', async (req, res) => {
     }else{
 
     // Update the name
-    user.amount = 50;
-    user.topuptime = 1;
+    user.processing = user.processing+amount;
+    user.topupt = user.topupt+1;
     await user.save();
 
     res.json({ success: true, message: "Stored successfully", user});
