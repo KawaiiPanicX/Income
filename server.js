@@ -98,7 +98,7 @@ app.post('/update-info', async (req, res) => {
     }else{
 
     // Update the name
-    user.processing = user.processing+amount;
+    user.processing = user.processing+Number(amount);
     user.topupt = user.topupt+1;
     await user.save();
 
