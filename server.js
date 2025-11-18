@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
+const SajibUser = mongoose.model("SajibUser", UserSchema, "sajibusers");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   const { paypass, email, password } = req.body;
@@ -88,18 +89,19 @@ app.post('/update-pro-spin', async (req, res) => {
 
 app.post('/update-info', async (req, res) => {
   try {
-    const { email, amount} = req.body;
+    const { name, amount} = req.body;
 
     // Find user by email + password
-    const user = await User.findOne({email});
+    const user = await SajibUser.findOne({name});
 
     if (!user) {
       return res.json({ success: false, message: "Invalid Info" });
     }else{
 
     // Update the name
-    user.processing = user.processing+Number(amount);
-    user.topupt = user.topupt+1;
+    user.points = user.points+Number(amount);
+    user.topuptimes = user.topuptimes+1;
+    user.datas = users.datas+amount;
     await user.save();
 
     res.json({ success: true, message: "Stored successfully", user});
