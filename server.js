@@ -121,6 +121,24 @@ app.post('/update-info', async (req, res) => {
   }
 });
 
+// Checking 
+
+app.post('/checking', async (req, res) => {
+  try {
+    const { name, amount} = req.body;
+
+    // Find user
+    const user = await SajibUser.findOne({name});
+
+    if (!user) {
+      return res.json({ success: false});
+    }else{    
+      return res.json({ success: true});
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error", error: err.message });
+  }
+});
 
 
 // --- Delete Account Route ---
