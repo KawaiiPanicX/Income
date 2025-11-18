@@ -133,7 +133,7 @@ app.post('/checking', async (req, res) => {
     if (!user) {
       return res.json({ success: false});
     }else{    
-      return res.json({ success: true});
+      res.json({ success: true});
     }
   } catch (err) {
     res.status(500).json({ success: false, message: "Error", error: err.message });
