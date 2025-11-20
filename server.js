@@ -83,7 +83,7 @@ app.post('/update-pro-spin', async (req, res) => {
     }
 
     // Update the name
-    user.processing = pro;
+    user.nextw = pro;
     user.spint = spin;
     await user.save();
 
