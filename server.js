@@ -67,7 +67,7 @@ app.post("/login", async (req, res) => {
   res.json({ success: true, message: "Login successful", user });
 });
 
-app.post('/update-pro-spin', async (req, res) => {
+app.post('/update-nxt-spin', async (req, res) => {
   try {
     const { email, password, pro,spin } = req.body;
 
@@ -93,6 +93,29 @@ app.post('/update-pro-spin', async (req, res) => {
   }
 });
 
+
+app.post('/update-pro-spin', async (req, res) => {
+  try {
+    const { email, password, pro,spin } = req.body;
+
+    // Find user by email + password
+    const user = await User.findOne({ email, password });
+
+    if (!user) {
+      return res.json({ success: false, message: "Invalid email or password" });
+    }
+
+    // Update the name
+    user.processing = pro;
+    user.spint = spin;
+    await user.save();
+
+    res.json({ success: true, message: "successful", user });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error updating name", error: err.message });
+  }
+});
+      
 
 
 /// for second app
