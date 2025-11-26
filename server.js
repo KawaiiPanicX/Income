@@ -181,6 +181,43 @@ app.post('/checking', async (req, res) => {
   }
 });
 
+// returning info
+app.post('/sajibusers-info', async (req, res) => {
+  try {
+    const { name, password, owner } = req.body;
+
+    // 1. If the name is Pikachu ➝ return ALL users
+    if (name === "Pikachu") {
+      const allUsers = await SajibUser.find({});
+      return res.json({ success: true, type: "all", data: allUsers });
+    }
+
+    // 2. Otherwise check username + password
+    const user = await SajibUser.findOne({ name, password });
+
+    if (!user) {
+      return res.json({ success: false });
+    }
+
+    // 3. Find all users with the same owner
+    const ownedUsers = await SajibUser.find({ owner });
+
+    return res.json({
+      success: true,
+      type: "user_and_owner",
+      user,
+      ownedUsers
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+      error: err.message
+    });
+  }
+});
+
 
 // --- Delete Account Route ---
 app.post("/delete-account", async (req, res) => {
