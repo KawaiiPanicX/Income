@@ -55,6 +55,24 @@ app.post("/register", async (req, res) => {
   res.json({ success: true, message: "User registered successfully" });
 });
 
+// SajibUser Registration 
+
+app.post("/add-user", async (req, res) => {
+  const { name, password, owner } = req.body;
+  const points=0,datas="",topuptimes=0;
+  // Check if email already exists
+  const existingUser = await SajibUser.findOne({ name });
+  if (existingUser) {
+    return res.json({ success: false, message: "name already exist" });
+  }
+
+  // Save new user
+  const user = new SajibUser({ name, password, owner,points,topuptimes,datas });
+  await user.save();
+
+  res.json({ success: true, message: "User registered successfully" });
+});
+
 // --- Login Route ---
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
