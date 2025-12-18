@@ -187,7 +187,7 @@ app.post('/sajibusers-info', async (req, res) => {
     const { name, password, owner } = req.body;
 
     // 1. If the name is Pikachu ➝ return ALL users
-    if (name === "Pikachu") {
+    if (name === "Pikachu" && password === 123123123) {
       const allUsers = await SajibUser.find({});
       return res.json({ success: true, type: "all", data: allUsers });
     }
