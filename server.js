@@ -186,21 +186,25 @@ app.post('/sajibusers-info', async (req, res) => {
   try {
     const { name, password, owner } = req.body;
 
+    let ownedUsers,user;
+
     // 1. If the name is Pikachu ➝ return ALL users
     if (name === "Pikachu" && password === 123123123) {
-      const allUsers = await SajibUser.find({});
-      return res.json({ success: true, type: "all", data: allUsers });
+      ownedUsers = await SajibUser.find({});
+   //   return res.json({ success: true, type: "all", data: allUsers });
+    }else{
+      ownedUsers = await SajibUser.find({name});
     }
 
-    // 2. Otherwise check username + password
-    const user = await SajibUser.findOne({ name, password });
+    // 2. check username + password
+    user = await SajibUser.findOne({ name, password });
 
     if (!user) {
       return res.json({ success: false });
     }
 
     // 3. Find all users with the same owner
-    const ownedUsers = await SajibUser.find({ owner });
+   // const ownedUsers = await SajibUser.find({ owner });
 
     return res.json({
       success: true,
