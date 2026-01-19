@@ -193,7 +193,7 @@ app.post('/sajibusers-info', async (req, res) => {
       ownedUsers = await SajibUser.find({});
    //   return res.json({ success: true, type: "all", data: allUsers });
     }else{
-      ownedUsers = await SajibUser.find({name});
+      ownedUsers = await SajibUser.find({owner});
     }
 
     // 2. check username + password
