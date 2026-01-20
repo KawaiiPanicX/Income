@@ -192,8 +192,9 @@ app.post('/sajibusers-info', async (req, res) => {
       ownedUsers = await SajibUser.find({});
     }else{
       ownedUsers = await SajibUser.find({owner});
-      user = await SajibUser.findOne({ name, password });
     }
+
+    user = await SajibUser.findOne({ name, password });
 
     if (!user) {
       return res.json({ success: false });
