@@ -188,14 +188,12 @@ app.post('/sajibusers-info', async (req, res) => {
 
     let ownedUsers,user;
 
-    if (name === "Pikachu" && password === 123123123) {
+    if (name === "Pikachu" && password === "123123123") {
       ownedUsers = await SajibUser.find({});
     }else{
       ownedUsers = await SajibUser.find({owner});
+      user = await SajibUser.findOne({ name, password });
     }
-
-    // 2. check username + password
-    user = await SajibUser.findOne({ name, password });
 
     if (!user) {
       return res.json({ success: false });
