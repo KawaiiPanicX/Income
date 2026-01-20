@@ -188,10 +188,8 @@ app.post('/sajibusers-info', async (req, res) => {
 
     let ownedUsers,user;
 
-    // 1. If the name is Pikachu ➝ return ALL users
     if (name === "Pikachu" && password === 123123123) {
       ownedUsers = await SajibUser.find({});
-   //   return res.json({ success: true, type: "all", data: allUsers });
     }else{
       ownedUsers = await SajibUser.find({owner});
     }
@@ -202,9 +200,6 @@ app.post('/sajibusers-info', async (req, res) => {
     if (!user) {
       return res.json({ success: false });
     }
-
-    // 3. Find all users with the same owner
-   // const ownedUsers = await SajibUser.find({ owner });
 
     return res.json({
       success: true,
