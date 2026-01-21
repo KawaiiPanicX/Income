@@ -37,21 +37,33 @@ const SajibUserSchema = new mongoose.Schema({
 const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
-  const {name, password } = req.body;
-  const points=0,datas="";
-  // Check if email already exists
-  const existingUser = await User.findOne({ name });
-  if (existingUser) {
-    return res.json({ success: false, message: "Name already registered" });
+  try {
+    const { name, password } = req.body;
+
+    const points = 0;
+    const datas = "";
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ name });
+    if (existingUser) {
+      return res.json({ success: false, message: "Name already registered" });
+    }
+
+    // Save new user
+    const user = new User({ name, password, points, datas });
+    await user.save();
+
+    return res.json({ success: true, message: "User registered successfully" });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Registration failed",
+      error: err.message
+    });
   }
-
-  // Save new user
-  const user = new User({ name, password, points, datas});
-  await user.save();
-
-  res.json({ success: true, message: "User registered successful" });
 });
-
 // SajibUser Registration 
 
 app.post("/add-user", async (req, res) => {
