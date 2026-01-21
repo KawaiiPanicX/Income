@@ -18,7 +18,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 const UserSchema = new mongoose.Schema({
   name: { type: String, unique: true },
   password: String,
-  points: Number,
+  points: Double,
   datas: String
 });
 
@@ -90,7 +90,7 @@ app.post('/update-infom', async (req, res) => {
     const user = await User.findOne({ name });
 
     // Update the name
-    user.points = user.points+Number(points);
+    user.points = user.points+Double(points);
     user.datas = user.datas+points;
     await user.save();
 
