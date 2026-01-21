@@ -82,7 +82,7 @@ app.post("/chechingm", async (req, res) => {
   res.json({ success: true, message: "Name Exist"});
 });
 // Points Update Route
-app.post('/update-info', async (req, res) => {
+app.post('/update-infom', async (req, res) => {
   try {
     const { name, points} = req.body;
 
