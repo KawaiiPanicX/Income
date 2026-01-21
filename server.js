@@ -16,13 +16,10 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // --- User Schema ---
 const UserSchema = new mongoose.Schema({
-  email: { type: String, unique: true },
+  name: { type: String, unique: true },
   password: String,
-  paypass: String,
-  nextw: Number,
-  processing: Number,
-  spint: Number,
-  topupt: Number
+  points: Number,
+  datas: String
 });
 
 const User = mongoose.model("User", UserSchema);
@@ -40,19 +37,19 @@ const SajibUserSchema = new mongoose.Schema({
 const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
-  const { paypass, email, password } = req.body;
-  const nextw=0,processing=0,spint=5,topupt=0;
+  const {name, password } = req.body;
+  const points=0,datas="";
   // Check if email already exists
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ name });
   if (existingUser) {
-    return res.json({ success: false, message: "Email already registered" });
+    return res.json({ success: false, message: "Name already registered" });
   }
 
   // Save new user
-  const user = new User({ paypass, email, password,nextw,processing,spint,topupt });
+  const user = new User({ name, password, points, datas});
   await user.save();
 
-  res.json({ success: true, message: "User registered successfully" });
+  res.json({ success: true, message: "User registered successful" });
 });
 
 // SajibUser Registration 
@@ -73,67 +70,63 @@ app.post("/add-user", async (req, res) => {
   res.json({ success: true, message: "User registered successfully" });
 });
 
-// --- Login Route ---
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+// --- Checking Route ---
+app.post("/chechingm", async (req, res) => {
+  const { name } = req.body;
 
-  const user = await User.findOne({ email, password });
+  const user = await User.findOne({ name });
   if (!user) {
     return res.json({ success: false, message: "Invalid email or password" });
   }
 
-  res.json({ success: true, message: "Login successful", user });
+  res.json({ success: true, message: "Name Exist"});
 });
-
-app.post('/update-nxt-spin', async (req, res) => {
+// Points Update Route
+app.post('/update-info', async (req, res) => {
   try {
-    const { email, password, pro,spin } = req.body;
+    const { name, points} = req.body;
 
     // Find user by email + password
-    const user = await User.findOne({ email, password });
-
-    if (!user) {
-      return res.json({ success: false, message: "Invalid email or password" });
-    }
-    
-    if(user.processing<pro){
-      user.topupt=user.topupt+1;
-    }
+    const user = await User.findOne({ name });
 
     // Update the name
-    user.nextw = pro;
-    user.spint = spin;
+    user.points = user.points+Number(points);
+    user.datas = user.datas+points;
     await user.save();
 
-    res.json({ success: true, message: "successful", user });
+    res.json({ success: true});
   } catch (err) {
     res.status(500).json({ success: false, message: "Error updating name", error: err.message });
   }
 });
 
+// return info
 
-app.post('/update-pro-spin', async (req, res) => {
+app.post('/munnausers-info', async (req, res) => {
   try {
-    const { email, password, pro,spin } = req.body;
+    const { name, password} = req.body;
 
-    // Find user by email + password
-    const user = await User.findOne({ email, password });
+    let user = await SajibUser.findOne({ name, password });
 
     if (!user) {
-      return res.json({ success: false, message: "Invalid email or password" });
+      return res.json({ success: false });
     }
 
-    // Update the name
-    user.processing = pro;
-    user.spint = spin;
-    await user.save();
+    return res.json({
+      success: true,
+      user,
+    });
 
-    res.json({ success: true, message: "successful", user });
   } catch (err) {
-    res.status(500).json({ success: false, message: "Error updating name", error: err.message });
+    res.status(500).json({
+      success: false,
+      message: "Error",
+      error: err.message
+    });
   }
 });
-      
+
+
 
 
 /// for second app
