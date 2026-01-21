@@ -38,7 +38,7 @@ const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   const {name, password } = req.body;
-  const points=0,datas="";
+  const points=0.0,datas="";
   // Check if email already exists
   const existingUser = await User.findOne({ name });
   if (existingUser) {
