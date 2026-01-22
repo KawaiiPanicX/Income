@@ -120,12 +120,13 @@ app.post('/munna-info', async (req, res) => {
 
     if(name=="Munna" && password=="123123"){
       const users = await User.find({});
-    }else{
-      const users = await User.find({name, password});
-      if(users){
+      return res.json({success:"True", users});
+    }
+      const users = await User.findOne({name, password});
+      if(!users){
         return res.json({success:"Wrong"});
       }
-    }
+    
 
     return res.json({
       success: true,
