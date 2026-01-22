@@ -117,12 +117,12 @@ app.post('/update-infom', async (req, res) => {
 app.post('/munnausers-info', async (req, res) => {
   try {
     const { name, password} = req.body;
-
+    let user;
     if(name=="Munna"){
-      let user = await User.find({ });
+      user = await User.find({ });
     }else{
 
-    let user = await User.findOne({ name, password });
+    user = await User.findOne({ name, password });
 
     if (!user) {
       return res.json({ success: false });
