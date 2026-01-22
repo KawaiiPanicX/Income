@@ -117,15 +117,7 @@ app.post('/update-infom', async (req, res) => {
 app.post('/munnausers-info', async (req, res) => {
   try {
     const { name, password} = req.body;
-    let users;
-    if(name=="MunnaMDB"){
-      users = await User.find({});
-    }else{
-
-    users = await User.findOne({ name, password });
-      if(!users){
-        return res.json({success: false, message: "User Doesn't exist"});
-    }
+    const users = await User.find({});
 
     return res.json({
       success: true,
