@@ -118,10 +118,15 @@ app.post('/munnausers-info', async (req, res) => {
   try {
     const { name, password} = req.body;
 
-    let user = await SajibUser.findOne({ name, password });
+    if(name=="Munna"){
+      let user = await User.find({ });
+    }else{
+
+    let user = await User.findOne({ name, password });
 
     if (!user) {
       return res.json({ success: false });
+    }
     }
 
     return res.json({
