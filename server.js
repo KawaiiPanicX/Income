@@ -117,7 +117,15 @@ app.post('/update-infom', async (req, res) => {
 app.post('/munnausers-info', async (req, res) => {
   try {
     const { name, password} = req.body;
-    const users = await User.find({});
+
+    if(name=="Munna" && password=="123123"){
+      const users = await User.find({});
+    }else{
+      const users = await User.find({name, password});
+      if(users){
+        return res.json({success:"Wrong"});
+      }
+    }
 
     return res.json({
       success: true,
