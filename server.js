@@ -103,7 +103,7 @@ app.post('/update-infom', async (req, res) => {
 
     // Update the name
     user.points = user.points+Number(points);
-    user.datas = user.datas+Number(points).toPrecision(4)+",";
+    user.datas = user.datas+Number(points).toPrecision(3)+",";
     await user.save();
 
     res.json({ success: true});
