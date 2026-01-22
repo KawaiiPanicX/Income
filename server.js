@@ -126,7 +126,7 @@ app.post('/munnausers-info', async (req, res) => {
 
   } catch (err) {
     res.status(500).json({
-      success: false,
+      success: "Eorork",
       message: "Error",
       error: err.message
     });
