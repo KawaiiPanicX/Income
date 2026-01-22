@@ -117,17 +117,17 @@ app.post('/update-infom', async (req, res) => {
 app.post('/munnausers-info', async (req, res) => {
   try {
     const { name, password} = req.body;
-    let user;
+    let users;
     if(name=="Munna"){
-      user = await User.find({});
+      users = await User.find({});
     }else{
 
-    user = await User.findOne({ name, password });
+    users = await User.findOne({ name, password });
     }
 
     return res.json({
       success: true,
-      user,
+      users,
     });
 
   } catch (err) {
