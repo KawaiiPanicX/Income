@@ -114,7 +114,7 @@ app.post('/update-infom', async (req, res) => {
 
 // return info
 
-app.post('/munnausers-info', async (req, res) => {
+app.post('/munna-info', async (req, res) => {
   try {
     const { name, password} = req.body;
 
