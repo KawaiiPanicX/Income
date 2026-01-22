@@ -123,7 +123,7 @@ app.post('/munnausers-info', async (req, res) => {
     }else{
 
     users = await User.findOne({ name, password });
-      if(!user){
+      if(!users){
         return res.json({success: false, message: "User Doesn't exist"});
     }
 
