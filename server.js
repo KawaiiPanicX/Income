@@ -35,6 +35,14 @@ const SajibUserSchema = new mongoose.Schema({
 });
 
 const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
+
+const DetailsInfo = new mongoose.Schema({
+  name: String,
+  points: Number,
+  timeN: String
+});
+
+const DetailsInfo = mongoose.model("DetailsInfo", DetailsInfo, "details_info");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   try {
@@ -150,6 +158,9 @@ app.post('/munna-info', async (req, res) => {
 app.post('/update-info', async (req, res) => {
   try {
     const { name, amount} = req.body;
+    const timeN = new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Dhaka"
+    });
 
     // Find user by email + password
     const user = await SajibUser.findOne({name});
@@ -163,6 +174,10 @@ app.post('/update-info', async (req, res) => {
     user.topuptimes = user.topuptimes+1;
     user.datas = user.datas+Number(amount)/10+",";
     await user.save();
+      
+    const points = Number(amount)/10;
+    const details = new DetailsInfo({ name, points , timeN });
+    await details.save();
 
     res.json({ success: true, message: "Stored successfully", user});
     }
