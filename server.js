@@ -164,7 +164,7 @@ app.post('/details-info', async (req, res) => {
 
   } catch (err) {
     res.status(500).json({
-      success: error,
+      success: false,
       message: "Error",
       error: err.message
     });
