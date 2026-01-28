@@ -151,6 +151,27 @@ app.post('/munna-info', async (req, res) => {
 });
 
 
+app.post('/details-info', async (req, res) => {
+  try {
+    const { name, password} = req.body;
+
+    if(name=="Details" && password=="Info"){
+      const users = await DetailsInfo.find({});
+      return res.json({success:true, users});
+    }else{    
+        return res.json({success:false});
+    }
+
+  } catch (err) {
+    res.status(500).json({
+      success: error,
+      message: "Error",
+      error: err.message
+    });
+  }
+});
+
+
 
 
 /// for second app
