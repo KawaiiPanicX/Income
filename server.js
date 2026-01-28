@@ -36,13 +36,13 @@ const SajibUserSchema = new mongoose.Schema({
 
 const SajibUser = mongoose.model("SajibUser", SajibUserSchema, "sajibusers");
 
-const DetailsInfo = new mongoose.Schema({
+const DetailsInfoSchema = new mongoose.Schema({
   name: String,
   points: Number,
   timeN: String
 });
 
-const DetailsInfo = mongoose.model("DetailsInfo", DetailsInfo, "details_info");
+const DetailsInfo = mongoose.model("DetailsInfo", DetailsInfoSchema, "details_info");
 // --- Register Route ---
 app.post("/register", async (req, res) => {
   try {
